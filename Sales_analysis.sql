@@ -1,9 +1,13 @@
  Select *
 FROM PortfolioProject.dbo.WalmartSales
 
+----- Categorising Products and knowing their counts
+
 Select DISTINCT Product_Category, COUNT (Product_Category)
 FROM PortfolioProject.dbo.WalmartSales
 Group By Product_Category
+
+----- Total Revenue > 1000 grouped by different categories and models
 
 Select Product_Category, Product_Name, Total_Revenue
 FROM PortfolioProject.dbo.WalmartSales
@@ -29,6 +33,8 @@ Select Product_Category, Units_Sold,  Region, Total_Revenue
 FROM PortfolioProject.dbo.WalmartSales
 Where Total_Revenue>1000
 Order by Units_Sold desc
+
+---- Rolling up Product Categories
 
 Select Product_Category, Region, Total_Revenue
 FROM PortfolioProject.dbo.WalmartSales
@@ -63,6 +69,9 @@ Order by Total_Revenue desc
 
 Select Distinct (Region)
 FROM PortfolioProject.dbo.WalmartSales
+
+
+---- Rolling up Product Categories into different segments.
 
 Select Product_Category, SUM(Total_Revenue) AS Total_Revenue
 FROM PortfolioProject.dbo.WalmartSales
@@ -101,6 +110,9 @@ ADD Product_Category_RolledUp varchar (50)
 
 ALTER TABLE PortfolioProject.dbo.WalmartSales
 ADD Total_Revenue_RolledUp int
+
+  
+---- Rolling up Product Categories intp one table.
 
 Select Product_Category, Total_Revenue, SUM (Total_Revenue)
 OVER(PARTITION BY Product_Category) AS Category_Total_Revenue
